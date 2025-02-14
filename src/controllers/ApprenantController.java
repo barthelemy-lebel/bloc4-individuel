@@ -5,13 +5,12 @@ import java.util.List;
 import java.util.Scanner;
 
 import dao.ApprenantDAO;
-import dao.PromotionDAO;
 import models.Apprenant;
 import models.Promotion;
 
 public class ApprenantController {
     private ApprenantDAO apprenantDAO = new ApprenantDAO();
-    private PromotionDAO promotionDAO = new PromotionDAO();
+    private PromotionController promotionController = new PromotionController();
 
     public void ajouterApprenant(Scanner scanner) throws SQLException {
         System.out.println("Nom:");
@@ -27,7 +26,19 @@ public class ApprenantController {
         System.out.println("Rôles (séparés par des virgules):");
         List<String> roles = List.of(scanner.nextLine().split(","));
 
-        Apprenant apprenant = new Apprenant(0, new Promotion(1, "DI23", 2023, null), nom, prenom, email, telephone, absences, roles);
+        // Afficher les promotions disponibles
+        List<Promotion> promotions = promotionController.getAllPromotions();
+        System.out.println("Promotions disponibles:");
+        for (int i = 0; i < promotions.size(); i++) {
+            System.out.println((i + 1) + ". " + promotions.get(i).getNom() + " (" + promotions.get(i).getAnnee() + ")");
+        }
+
+        System.out.println("Sélectionnez une promotion (entrez le numéro):");
+        int promotionIndex = Integer.parseInt(scanner.nextLine()) - 1;
+        Promotion promotion = promotions.get(promotionIndex);
+
+        // Ajouter l'apprenant
+        Apprenant apprenant = new Apprenant(0, promotion, nom, prenom, email, telephone, absences, roles);
         apprenantDAO.ajouterApprenant(apprenant);
     }
 
