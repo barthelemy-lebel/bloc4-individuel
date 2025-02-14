@@ -17,6 +17,7 @@ public class PromotionController {
         System.out.println("Année de la promotion:");
         int annee = Integer.parseInt(scanner.nextLine());
 
+        // Ajouter la promotion
         Promotion promotion = new Promotion(0, nom, annee, null);
         promotionDAO.ajouterPromotion(promotion);
     }
@@ -48,5 +49,9 @@ public class PromotionController {
         } else {
             System.out.println("Promotion non trouvée.");
         }
+    }
+
+    public List<Promotion> getAllPromotions() throws SQLException {
+        return promotionDAO.getAllPromotions();
     }
 }

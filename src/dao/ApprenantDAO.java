@@ -26,7 +26,7 @@ public class ApprenantDAO {
             stmt.setString(4, apprenant.getEmail());
             stmt.setString(5, apprenant.getTelephone());
             stmt.setInt(6, apprenant.getAbsences());
-            stmt.setString(7, String.join(",", apprenant.getRoles())); // Rôles au format CSV
+            stmt.setString(7, String.join(",", apprenant.getRoles()));
             stmt.executeUpdate();
         }
     }
